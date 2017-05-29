@@ -1,6 +1,6 @@
 # flitch
 
-A sample [Flutter](https://flutter.io) using the [Twitch][twitch] API.
+A sample [Flutter](https://flutter.io) app using the [Twitch][twitch] API.
 
 [twitch]: https://pub.dartlang.org/packages/twitch
 
