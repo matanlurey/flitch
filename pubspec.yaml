@@ -1,0 +1,10 @@
+name: flitch
+description: A Flutter demo using the Twitch API.
+
+dependencies:
+  flutter:
+    sdk: flutter
+  twitch: ^0.3.0
+
+flutter:
+  uses-material-design: true
