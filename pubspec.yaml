@@ -4,7 +4,9 @@ description: A Flutter demo using the Twitch API.
 dependencies:
   flutter:
     sdk: flutter
-  twitch: ^0.3.0
+  twitch:
+    path: ../../lab/twitch.dart
+  url_launcher: "^0.4.2+1"
 
 flutter:
   uses-material-design: true
