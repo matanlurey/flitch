@@ -9,13 +9,9 @@ class Services {
   static final Twitch twitch = _singleton._twitch;
   Twitch _twitch;
 
-  factory Services() {
-    return _singleton;
-  }
-
   Services._internal();
-}
 
-setupServices(Twitch twitch) {
-  Services._singleton._twitch = twitch;
+  static void setup(Twitch twitch) {
+    _singleton._twitch = twitch;
+  }
 }

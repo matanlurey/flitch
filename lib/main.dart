@@ -15,6 +15,6 @@ import 'src/application.dart';
 const _twitchClientId = '6gtkhkgt33mb3hujfq5f4vc0mrn4kc';
 
 void main() {
-  setupServices(new Twitch(new TwitchHttp(clientId: _twitchClientId)));
+  Services.setup(new Twitch(new TwitchHttp(clientId: _twitchClientId)));
   runApp(new FlitchApp());
 }
