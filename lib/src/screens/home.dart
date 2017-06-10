@@ -42,18 +42,16 @@ class HomeWidgetState extends State<HomeScreen> {
         appBar: new AppBar(
           title: new Text('Flitch'),
           actions: [
-            new ClipOval(
-              child: new InkWell(
-                  child: new Container(
-                      child: new Icon(Icons.search),
-                      padding: new EdgeInsets.fromLTRB(16.0, 0.0, 12.0, 0.0)),
-                  onTap: () async {
-                    await Navigator.push(
-                        context,
-                        new MaterialPageRoute(
-                            builder: (context) => new SearchScreen()));
-                  }),
-            ),
+            new IconButton(
+                icon: new Icon(Icons.search),
+                padding: new EdgeInsets.fromLTRB(16.0, 0.0, 12.0, 0.0),
+                onPressed: () async {
+                  await Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) => new SearchScreen()));
+                },
+                tooltip: 'Search'),
           ],
         ),
         body: new Stack(

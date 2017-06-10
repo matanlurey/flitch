@@ -31,12 +31,14 @@ class SearchScreenState extends State<SearchScreen> {
                 },
                 autofocus: true,
                 decoration: new InputDecoration(
-                    hideDivider: true,
-                    hintText: "Search channels",
-                    hintStyle: new TextStyle(
-                        color: new Color.fromARGB(120, 255, 255, 255),
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.normal)),
+                  hideDivider: true,
+                  hintText: "Search channels...",
+                  hintStyle: new TextStyle(
+                    color: new Color.fromARGB(120, 255, 255, 255),
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
                 style: new TextStyle(
                     color: Colors.white,
                     fontSize: 18.0,

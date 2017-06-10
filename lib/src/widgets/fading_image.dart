@@ -249,7 +249,7 @@ class _ImageState extends State<FadingImage> with SingleTickerProviderStateMixin
   void initState(){
     super.initState();
     _controller = new AnimationController(vsync: this, duration:
-    const Duration(milliseconds: 500))
+    const Duration(milliseconds: 200))
       ..addListener((){
         setState((){
           _alpha = _controller.value;
