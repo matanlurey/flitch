@@ -17,47 +17,84 @@ class VideosList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Orientation orientation = MediaQuery.of(context).orientation;
+    final queryData = MediaQuery.of(context);
+    final orientation = queryData.orientation;
+    final size = queryData.size;
+
     return new FutureBuilder<Response<Video>>(
       future: future,
       builder: (context, snapshot) {
-        return snapshot == null || snapshot.data == null
-            ? new Center(child: new CircularProgressIndicator())
-            : new GridView.count(
-                crossAxisCount: (orientation == Orientation.portrait) ? 2 : 3,
+        final crossAxisCount = (orientation == Orientation.portrait) ? 1 : 2;
+        return snapshot.hasData
+            ? new GridView.count(
+                crossAxisCount: crossAxisCount,
                 mainAxisSpacing: 4.0,
                 crossAxisSpacing: 4.0,
+                childAspectRatio: (orientation == Orientation.portrait)
+                    ? size.width / VideoItem.containerHeight
+                    : size.width / 2 / VideoItem.containerHeight,
                 padding: const EdgeInsets.all(4.0),
-                childAspectRatio:
-                    (orientation == Orientation.portrait) ? 1.0 : 1.3,
-                children: snapshot != null && snapshot.data != null
+                children: snapshot.hasData
                     ? snapshot.data
-                        .map((video) => new _VideoItem(video))
+                        .map((video) => new VideoItem(video, crossAxisCount))
                         .toList()
-                    : []);
+                    : [])
+            : new Center(child: new CircularProgressIndicator());
       },
     );
   }
 }
 
-class _VideoItem extends StatelessWidget {
-  final Video _video;
+class VideoItem extends StatelessWidget {
+  static double containerHeight = 200.0;
 
-  const _VideoItem(this._video);
+  final Video video;
+  final int crossAxisCount;
+
+  const VideoItem(this.video, this.crossAxisCount);
 
   @override
-  Widget build(_) {
+  Widget build(context) {
     return new GridTile(
-      child: new Hero(
-        tag: _video.id,
-        child: new InkWell(
-            onTap: () async {
-              new FlutterWebviewPlugin().launch(_video.url);
-            },
-            child: new FadingImage(
-              image: new NetworkImage(_video.preview.large),
-              fit: BoxFit.cover,
-            )),
+      child: new InkWell(
+        onTap: () async {
+          new FlutterWebviewPlugin().launch(video.url);
+        },
+        child: new Container(
+          height: containerHeight,
+          child: new Stack(
+            fit: StackFit.expand,
+            children: [
+              new FadingImage(
+                image: new NetworkImage(video.preview.large),
+                fit: BoxFit.cover,
+              ),
+              new Positioned(
+                bottom: 0.0,
+                child: new Container(
+                  margin: new EdgeInsets.only(right: 16.0),
+                  constraints: new BoxConstraints(
+                      maxWidth: MediaQuery.of(context).size.width /
+                              this.crossAxisCount -
+                          16.0),
+                  padding: new EdgeInsets.all(12.0),
+                  decoration: new BoxDecoration(
+                    color: new Color.fromARGB(255, 33, 33, 33),
+                  ),
+                  child: new Text(
+                    video.title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: new TextStyle(
+                      color: Colors.white70,
+                      fontSize: 18.0,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
