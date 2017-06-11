@@ -11,7 +11,7 @@ class FlitchApp extends MaterialApp {
       : super(
           debugShowCheckedModeBanner: false,
           title: 'Flitch',
-          home: const HomeView(),
+          home: const HomeWidget(),
           theme: _twitchTheme,
         );
 }

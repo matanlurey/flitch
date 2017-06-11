@@ -5,17 +5,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../services.dart' as services;
 import 'package:twitch/twitch.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class TopGameList extends StatelessWidget {
-  const TopGameList();
+class TopVideosList extends StatelessWidget {
+  final Twitch twitch;
+
+  const TopVideosList(this.twitch);
 
   @override
   Widget build(BuildContext context) {
     final Orientation orientation = MediaQuery.of(context).orientation;
-    return new FutureBuilder<Response<TopGame>>(
-      future: services.twitch.getTopGames(),
+    return new FutureBuilder<Response<Video>>(
+      future: twitch.getTopVideos(),
       builder: (context, snapshot) {
         return new GridView.count(
             crossAxisCount: (orientation == Orientation.portrait) ? 2 : 3,
@@ -24,29 +26,33 @@ class TopGameList extends StatelessWidget {
             padding: const EdgeInsets.all(4.0),
             childAspectRatio: (orientation == Orientation.portrait) ? 1.0 : 1.3,
             children: snapshot != null && snapshot.data != null
-                ? snapshot.data
-                    .map((topGame) => new _GameItem(topGame))
-                    .toList()
+                ? snapshot.data.map((video) => new _VideoItem(video)).toList()
                 : []);
       },
     );
   }
 }
 
-class _GameItem extends StatelessWidget {
-  final TopGame _topGame;
+class _VideoItem extends StatelessWidget {
+  final Video _video;
 
-  const _GameItem(this._topGame);
+  const _VideoItem(this._video);
 
   @override
   Widget build(_) {
     return new GridTile(
       child: new Hero(
-        tag: _topGame.game.name,
-        child: new Image.network(
-          _topGame.game.box.large,
-          fit: BoxFit.cover,
-        ),
+        tag: _video.id,
+        child: new InkWell(
+            onTap: () async {
+              if (await canLaunch(_video.url)) {
+                await launch(_video.url);
+              }
+            },
+            child: new Image.network(
+              _video.preview.large,
+              fit: BoxFit.cover,
+            )),
       ),
     );
   }
