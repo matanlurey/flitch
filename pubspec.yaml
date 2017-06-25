@@ -4,8 +4,7 @@ description: A Flutter demo using the Twitch API.
 dependencies:
   flutter:
     sdk: flutter
-  twitch:
-    path: ../../lab/twitch.dart
+  twitch: ^0.3.2
   flutter_webview_plugin: "^0.0.3"
 
 flutter:
