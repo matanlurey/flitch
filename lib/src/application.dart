@@ -4,14 +4,14 @@
 
 import 'package:flutter/material.dart';
 
-import 'views/home.dart';
+import 'package:flitch/src/screens/home.dart';
 
 class FlitchApp extends MaterialApp {
   FlitchApp()
       : super(
           debugShowCheckedModeBanner: false,
           title: 'Flitch',
-          home: const HomeWidget(),
+          home: const HomeScreen(),
           theme: _twitchTheme,
         );
 }

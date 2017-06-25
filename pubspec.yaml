@@ -4,8 +4,8 @@ description: A Flutter demo using the Twitch API.
 dependencies:
   flutter:
     sdk: flutter
-  twitch: 0.3.1
-  url_launcher: "^0.4.2+1"
+  twitch: ^0.3.2
+  flutter_webview_plugin: "^0.0.3"
 
 flutter:
   uses-material-design: true

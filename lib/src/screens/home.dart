@@ -2,13 +2,14 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-import 'package:flitch/src/widgets/top_videos.dart';
+import 'package:flitch/src/screens/search.dart';
+import 'package:flitch/src/services.dart';
+import 'package:flitch/src/widgets/videos.dart';
 import 'package:flutter/material.dart';
-import '../services.dart' as services;
-import '../widgets/game.dart';
+import '../widgets/top_games.dart';
 
-class HomeWidget extends StatefulWidget {
-  const HomeWidget();
+class HomeScreen extends StatefulWidget {
+  const HomeScreen();
 
   @override
   State<StatefulWidget> createState() {
@@ -16,18 +17,18 @@ class HomeWidget extends StatefulWidget {
   }
 }
 
-class HomeWidgetState extends State<HomeWidget> {
+class HomeWidgetState extends State<HomeScreen> {
   int _currentIndex = 0;
-  final List<Screen> _screens = [
-    new Screen(
+  final List<Tab> _tabs = [
+    new Tab(
       title: 'Top Games',
       body: new TopGameList(),
       key: new Key('TopGamesList'),
       icon: Icons.games,
     ),
-    new Screen(
+    new Tab(
       title: 'Top Videos',
-      body: new TopVideosList(services.twitch),
+      body: new VideosList(Services.twitch.getTopVideos()),
       key: new Key('TopVideosList'),
       icon: Icons.videocam,
     ),
@@ -40,11 +41,23 @@ class HomeWidgetState extends State<HomeWidget> {
     return new Scaffold(
         appBar: new AppBar(
           title: new Text('Flitch'),
+          actions: [
+            new IconButton(
+                icon: new Icon(Icons.search),
+                padding: new EdgeInsets.fromLTRB(16.0, 0.0, 12.0, 0.0),
+                onPressed: () async {
+                  await Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) => new SearchScreen()));
+                },
+                tooltip: 'Search'),
+          ],
         ),
         body: new Stack(
-            children: (_screens
+            children: (_tabs
                 // Get all inactive screens
-                .where((screen) => _screens.indexOf(screen) != _currentIndex)
+                .where((screen) => _tabs.indexOf(screen) != _currentIndex)
                 // Place them on the bottom of the Stack, and fade em out
                 .map((screen) => new AnimatedOpacity(
                     opacity: 0.0,
@@ -56,8 +69,8 @@ class HomeWidgetState extends State<HomeWidget> {
                   ..add(new AnimatedOpacity(
                       opacity: 1.0,
                       duration: transitionDuration,
-                      child: _screens[_currentIndex].body,
-                      key: _screens[_currentIndex].key)))),
+                      child: _tabs[_currentIndex].body,
+                      key: _tabs[_currentIndex].key)))),
         bottomNavigationBar: new BottomNavigationBar(
             currentIndex: _currentIndex,
             onTap: (currentIndex) {
@@ -65,18 +78,18 @@ class HomeWidgetState extends State<HomeWidget> {
                 _currentIndex = currentIndex;
               });
             },
-            items: _screens
+            items: _tabs
                 .map((item) => new BottomNavigationBarItem(
                     icon: new Icon(item.icon), title: new Text(item.title)))
                 .toList()));
   }
 }
 
-class Screen {
+class Tab {
   final Widget body;
   final IconData icon;
   final String title;
   final Key key;
 
-  Screen({this.body, this.icon, this.title, this.key});
+  Tab({this.body, this.icon, this.title, this.key});
 }

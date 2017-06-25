@@ -4,14 +4,14 @@
 
 import 'package:twitch/twitch.dart';
 
-Twitch _twitch;
+class Services {
+  static final Services _singleton = new Services._internal();
+  static final Twitch twitch = _singleton._twitch;
+  Twitch _twitch;
 
-/// Sets up services for the entire application.
-void setUpServices({
-  Twitch twitch,
-}) {
-  _twitch = twitch;
+  Services._internal();
+
+  static void setup(Twitch twitch) {
+    _singleton._twitch = twitch;
+  }
 }
-
-/// Returns the Twitch service.
-Twitch get twitch => _twitch;
