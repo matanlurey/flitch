@@ -4,8 +4,8 @@ A sample [Flutter](https://flutter.io) app using the [Twitch][twitch] API.
 
 [twitch]: https://pub.dartlang.org/packages/twitch
 
-<img src="https://user-images.githubusercontent.com/168174/27517809-3dd6f9fa-5987-11e7-9666-bed14842f39d.png" height="600" />
-<img src="https://user-images.githubusercontent.com/126604/27004641-c4134720-4e0c-11e7-8a77-2856eea750c9.gif" width="338" />
+<img src="https://user-images.githubusercontent.com/168174/27517809-3dd6f9fa-5987-11e7-9666-bed14842f39d.png" height="500" />
+<img src="https://user-images.githubusercontent.com/126604/27004641-c4134720-4e0c-11e7-8a77-2856eea750c9.gif" width="282" />
 
 **NOTE**: This is not an official Google or Dart project.
 
