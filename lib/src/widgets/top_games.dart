@@ -3,7 +3,7 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:flitch/src/services.dart';
-import 'package:flitch/src/widgets/fading_image.dart';
+import 'package:flitch/src/widgets/flitch_fade_in_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -47,9 +47,7 @@ class _GameItem extends StatelessWidget {
     return new GridTile(
       child: new Hero(
         tag: _topGame.game.name,
-        child: new FadingImage(
-            fit: BoxFit.cover,
-            image: new NetworkImage(_topGame.game.box.large)),
+        child: new FlitchFadeInImage(_topGame.game.box.large),
       ),
     );
   }

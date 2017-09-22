@@ -4,7 +4,7 @@
 
 import 'package:flitch/src/screens/channel.dart';
 import 'package:flitch/src/services.dart';
-import 'package:flitch/src/widgets/fading_image.dart';
+import 'package:flitch/src/widgets/flitch_fade_in_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:twitch/twitch.dart';
@@ -37,10 +37,7 @@ class SearchChannelsList extends StatelessWidget {
                                 leading: channel.logo == null
                                     ? new Container()
                                     : new ClipOval(
-                                        child: new FadingImage(
-                                          image: new NetworkImage(channel.logo),
-                                          fit: BoxFit.cover,
-                                        ),
+                                        child: new FlitchFadeInImage(channel.logo),
                                       ),
                                 title: new Text(channel.name),
                                 subtitle: new Text(channel.url))))

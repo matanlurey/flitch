@@ -3,7 +3,7 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'dart:async';
-import 'package:flitch/src/widgets/fading_image.dart';
+import 'package:flitch/src/widgets/flitch_fade_in_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -20,19 +20,18 @@ class VideosList extends StatelessWidget {
     final queryData = MediaQuery.of(context);
     final orientation = queryData.orientation;
     final size = queryData.size;
+    final crossAxisCount = (orientation == Orientation.portrait) ? 1 : 2;
 
     return new FutureBuilder<Response<Video>>(
       future: future,
       builder: (context, snapshot) {
-        final crossAxisCount = (orientation == Orientation.portrait) ? 1 : 2;
         return snapshot.hasData
             ? new GridView.count(
                 crossAxisCount: crossAxisCount,
                 mainAxisSpacing: 4.0,
                 crossAxisSpacing: 4.0,
-                childAspectRatio: (orientation == Orientation.portrait)
-                    ? size.width / VideoItem.containerHeight
-                    : size.width / 2 / VideoItem.containerHeight,
+                childAspectRatio:
+                    size.width / crossAxisCount / VideoItem.containerHeight,
                 padding: const EdgeInsets.all(4.0),
                 children: snapshot.hasData
                     ? snapshot.data
@@ -65,10 +64,7 @@ class VideoItem extends StatelessWidget {
           child: new Stack(
             fit: StackFit.expand,
             children: [
-              new FadingImage(
-                image: new NetworkImage(video.preview.large),
-                fit: BoxFit.cover,
-              ),
+              new FlitchFadeInImage(video.preview.large),
               new Positioned(
                 bottom: 0.0,
                 child: new Container(
